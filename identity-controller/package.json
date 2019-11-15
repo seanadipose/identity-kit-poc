@@ -8,11 +8,14 @@
     "serve": "ts-node src/index.ts",
     "test:watch": "nodemon --exec npm test",
     "start": "nodemon -L",
+    "debug": "nodemon --exec node --inspect-brk=127.0.0.1:9229 -r dotenv/config -r ts-node/register src/index.ts",
+    "config": "node -r dotenv/config config.js dotenv_config_path=/custom/path/to/your/env/vars",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.2.3",
+    "@types/chai": "^4.2.5",
     "@types/dotenv": "^6.1.1",
     "@types/expect": "^24.3.0",
     "@types/hapi__joi": "^16.0.3",
@@ -33,9 +36,14 @@
     "@types/uuid": "^3.4.6",
     "ava": "^2.4.0",
     "chai": "^4.2.0",
+    "date-fns": "^2.7.0",
+    "dotenv": "^8.1.0",
+    "expect": "^24.9.0",
     "mocha": "^6.2.2",
+    "ndb": "^1.1.5",
     "nodemon": "^1.19.2",
     "pg": "^7.12.1",
+    "prettier": "^1.19.1",
     "reflect-metadata": "^0.1.13",
     "supertest": "^4.0.2",
     "ts-node": "^8.4.1",
@@ -47,7 +55,6 @@
   "dependencies": {
     "@hapi/joi": "^16.1.7",
     "@koa/cors": "^3.0.0",
-    "dotenv": "^8.1.0",
     "http-status-codes": "^1.3.2",
     "koa": "^2.8.1",
     "koa-bodyparser": "^4.2.1",
@@ -56,7 +63,7 @@
     "koa-router": "^7.4.0",
     "koa2-cors": "^2.0.6",
     "module-alias": "^2.2.1",
-    "mongodb": "^3.3.3",
+    "mongodb": "^3.3.4",
     "pouchdb": "^7.1.1",
     "pouchdb-find": "^7.1.1",
     "pouchdb-server": "^4.2.0",
@@ -71,5 +78,11 @@
     "require": [
       "ts-node/register"
     ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
   }
 }
