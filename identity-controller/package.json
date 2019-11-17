@@ -10,7 +10,8 @@
     "start": "nodemon -L",
     "debug": "nodemon --exec node --inspect-brk=127.0.0.1:9229 -r dotenv/config -r ts-node/register src/index.ts",
     "config": "node -r dotenv/config config.js dotenv_config_path=/custom/path/to/your/env/vars",
-    "build": "tsc"
+    "build": "tsc",
+    "start-docker": "npm install && nodemon -L"
   },
   "author": "",
   "license": "ISC",
