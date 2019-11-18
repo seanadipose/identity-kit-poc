@@ -77,6 +77,8 @@ router.post('/', async (ctx: Context) => {
   }
 });
 
+router.post('/:id/invite', async (ctx: Context) => {});
+
 router.get('/:id', async (ctx: Context) => {
   const id = ctx.params.id;
   try {
@@ -86,4 +88,5 @@ router.get('/:id', async (ctx: Context) => {
     return ctx.throw(err.message);
   }
 });
+
 export default router;
