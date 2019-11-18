@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'waa-view-wrapper',
   template: `
-    <ion-content padding fullscreen color="light">
+    <ion-content color="light" fullscreen>
       <ng-content> </ng-content>
     </ion-content>
   `,

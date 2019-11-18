@@ -5,6 +5,7 @@ import { StateService, StateType } from './state.service';
 import { ActionType } from '../shared/interfaces/actions.interface';
 import { of } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
+import { map, take } from 'rxjs/operators';
 
 const testData = [
   {
@@ -85,10 +86,8 @@ export class ActionService {
   }
 
   loadData() {
-    this.stateSvc.userList =
-      this.stateSvc.state === 'invited'
-        ? this.invitedUsers
-        : this.confirmedUsers;
+    const obs = this.httpSvc.get<IInvitationRecord[]>('invitations');
+    obs.pipe(take(1)).subscribe(val => (this.stateSvc.userList = val));
   }
 
   async createInvitation(params: {
@@ -146,7 +145,7 @@ export class ActionService {
     } else {
       const itm = this.invitedUsers.find(itm => itm._id === records);
     }
-    this.stateSvc.userList = this.invitedUsers;
+    this.loadData();
     this.clearRecords();
   }
 
@@ -162,8 +161,9 @@ export class ActionService {
 
   changeState(state: StateType) {
     this.stateSvc.state = state;
-    this.stateSvc.userList =
-      state === 'invited' ? this.invitedUsers : this.confirmedUsers;
+    // this.stateSvc.userList =
+    //   state === 'invited' ? this.invitedUsers : this.confirmedUsers;
+    this.loadData();
   }
 
   getRecord(id: string) {
@@ -176,20 +176,20 @@ export class ActionService {
 
   clearRecords() {
     this.stateSvc.changeRecords.clear();
-    const state = this.stateSvc.state;
-    const recordList =
-      state === 'invited' ? this.invitedUsers : this.confirmedUsers;
-    this.stateSvc.userList =
-      state === 'invited'
-        ? recordList.map(record => {
-            const { changed, ...noChanged } = record;
+    this.loadData();
+    // const recordList =
+    //   state === 'invited' ? this.invitedUsers : this.confirmedUsers;
+    // this.stateSvc.userList =
+    //   state === 'invited'
+    //     ? recordList.map(record => {
+    //         const { changed, ...noChanged } = record;
 
-            return { changed: false, ...noChanged };
-          })
-        : recordList.map(record => {
-            const { changed, active, ...noChanged } = record;
-            return { changed: active, active, ...noChanged };
-          });
+    //         return { changed: false, ...noChanged };
+    //       })
+    //     : recordList.map(record => {
+    //         const { changed, active, ...noChanged } = record;
+    //         return { changed: active, active, ...noChanged };
+    //       });
   }
   logout() {
     this.keyCloakSvc.logout();

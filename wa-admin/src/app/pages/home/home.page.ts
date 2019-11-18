@@ -6,6 +6,7 @@ import { ActionService } from 'src/app/services/action.service';
 import { Router } from '@angular/router';
 import { ActionType } from 'src/app/shared/interfaces/actions.interface';
 import { AlertService } from 'src/app/services/alert.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'waa-home',
@@ -23,7 +24,7 @@ import { AlertService } from 'src/app/services/alert.service';
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding fullscreen color="light">
+    <ion-content padding color="light">
       <ion-toolbar color="secondary">
         <ion-buttons slot="secondary">
           <ion-button (click)="router.navigate(['/add-user'])" slot="start">
@@ -73,7 +74,17 @@ import { AlertService } from 'src/app/services/alert.service';
 export class HomePage implements OnInit {
   title = 'Manage';
 
-  $records = this.stateSvc.$userList;
+  $records = this.stateSvc.$userList.pipe(
+    map(obs => {
+      if (!obs) return;
+      const state = this.stateSvc.state;
+      const filtered =
+        state === 'invited'
+          ? obs.filter(recs => !recs.consumed)
+          : obs.filter(recs => recs.consumed);
+      return filtered;
+    })
+  );
 
   constructor(
     private httpSvc: HttpService,
@@ -87,7 +98,6 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.actionSvc.loadData();
     this.title = this.stateSvc.user.username;
-    console.log(this.stateSvc.user);
   }
   action() {
     this.stateSvc.changeRecords.size > 0
