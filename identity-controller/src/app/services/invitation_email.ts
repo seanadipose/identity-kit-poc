@@ -1,4 +1,4 @@
-export const emailTemplate = (url: string) => { 
+export const emailTemplate = (url: string, adminAddress: string) => { 
   
   return `<p>
 You have received this invitation from name@email.com. If you have any
@@ -48,7 +48,7 @@ Please install one of the following:
 Step 2: Obtain your proof of concept digital ID for verified person
 </p>
 <p>
-Use the following link <a href="${url}">Link</a>
+Use the following <a href="${url}">Link</a>
 </p>
 <p>
 You can use this link multiple times to allow for demonstrations you may want to

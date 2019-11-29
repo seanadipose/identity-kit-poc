@@ -82,7 +82,7 @@ export class ActionService {
         .post(`${this._apiUrl}invitations/${records}/revoke`, {
           addedBy: this.stateSvc.user.username
         })
-        .toPromise();
+      .toPromise();
     }
   }
   async sendEmail(records: string[] | string) {
