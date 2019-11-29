@@ -3,9 +3,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'wap-request-token',
   template: `
-    <p>
-      request-token works!
-    </p>
+    <ion-header>
+      <ion-title>
+        Request New Token
+      </ion-title>
+    </ion-header>
+    <wap-view-wrapper>
+          </wap-view-wrapper>
   `,
   styleUrls: ['./request-token.component.scss']
 })
